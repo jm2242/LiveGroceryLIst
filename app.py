@@ -32,9 +32,13 @@ def login_required(f):
 @app.route('/')
 @login_required
 def home():
-	posts = db.session.query(BlogPost).all()
-	
-	return render_template('index.html', posts=posts)  # render a template
+	groceries = db.session.query(BlogPost).all()
+	grocdata = []
+	for groc in groceries:
+		grocdata.append(dict(item=groc.title.encode("utf-8"),description=groc.description.encode("utf-8"), timeadded=groc.time.encode("utf-8")))
+	print grocdata
+	print("length of grocdata is: ",len(grocdata))
+	return render_template('index.html', groceries=grocdata)  # render a template
     
 
 
@@ -67,4 +71,4 @@ def logout():
 # 	return sqlite3.connect(app.databse)
 # start the server with the 'run()' method
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)

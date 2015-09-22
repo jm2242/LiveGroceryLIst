@@ -2,15 +2,17 @@ from app import db
 
 class BlogPost(db.Model):
 
-	__tablename__ = "posts"
+	__tablename__ = "groceries"
 
 	id = db.Column(db.Integer, primary_key = True)
 	title = db.Column(db.String, nullable=False)
 	description = db.Column(db.String, nullable=False)
+	time = db.Column(db.String,nullable=False)
 
-	def __init__(self, title, description):
+	def __init__(self, title, description,time):
 		self.title = title
 		self.description = description
+		self.time = time
 
 	def __repr__(self):
-		return "{}-{}".format(self.title, self.description)
+		return "{}-{}-{}".format(self.title, self.description, self.time)

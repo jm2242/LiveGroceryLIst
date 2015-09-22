@@ -1,15 +1,244 @@
 {% extends "base.html" %}
 {% block content %}
 
-  <h1>Welcome to Flask!</h1>
-  <br>
-  <p>Click <a href="/logout">here</a> to logout.</p>
-  {% for post in posts %}
-    <strong>Title:</strong> {{ post.title}} 
-    <br>
-    <strong>Post</strong> {{ post.description }}
-    <br>
-    <br>
-  {% endfor %}
+  <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <header>
+            <!-- How to do a navbar-->
+            <div class="navbar navbar-default navbar-fixed-top navbar-inverse id=navbar">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target="#example">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a href="" class="navbar-brand">LiveGroceryList</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="example">
+                        <ul class="nav navbar-nav">
+                            <li><a href="">Link 1</a></li>
+                            <li class="active"><a href="">Link 2</a></li>
+                            <li><a href="">Link 3</a></li>
+                        </ul>
+
+                        <a href="" class="btn btn-primary navbar-btn navbar-right">Home</a>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="jumbotron text-center">
+                <div class="container">
+                    <h1> Live Grocery List</h1>
+                    <p> Synchronize your grocery list between your entire family!</p>
+                </div>
+
+            </div>
+        </header>
+
+
+        <!-- Add your site or application content here -->
+        <div class = "container">
+            <div class="panel panel-default panel-info">
+                <div class="panel-heading">
+                    <div class="container">
+                        <div class="row text-center">
+                            <h3 class="panel-title">Grocery List</h3>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="panel-body">
+                    <table id="table" class="data-checkbox">
+
+                    </table>
+                </div>
+                <div class="footer">
+                    <!-- Add buttons to delete and add rows-->
+                    <br>
+                    <button type="button" id="add_row" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal-1"
+                        >Add Row</button><a id='delete_row' class="pull-right btn btn-primary">Delete Selected Rows</a>
+                </div>
+            </div>
+        </div>
+        <!--Define the modal window that pops up when adding a row -->
+        <div class="modal fade" id="modal-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times</button>
+                        <h3 class="modal-title text-center">Add an item!</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form action="" class="form-inline">
+                                <div class="form-group has-feedback">
+                                    <label for="element-item-text" class="sr-only">This is the text of the label</label>
+                                    <input type="text" id="element-item-text" class="form-control" placeholder="Item name">
+                                    <!--<span class="glyphicon glyphicon-ok form-control-feedback"></span>-->
+                                </div>
+                                <div class="form-group">
+                                    <label for="element-item-description" class="sr-only">This is the text of the label</label>
+                                    <input type="text" id="element-item-description" class="form-control" placeholder="Item description">
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <p class="pull-left">Click close or anywhere outside the modal window to dismiss </p>
+                        <button type="button" id="savedata" class="btn btn-primary pull right">Save</button>
+                        <a href="" class="btn btn-primary pull-right" id="closebox" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <br>
+        <!-- Set up the table-->
+        <script>
+            var currentDate = new Date();
+            var datePortion = currentDate.toDateString().split(" ")
+            var timePortion = currentDate.toTimeString().split(" ")[0]
+            var parsedDate = timePortion + ", " + datePortion[0] + ", " + datePortion[1] + " " +  datePortion[2]
+            $('#table').bootstrapTable({
+                
+                columns: [{
+
+                    field: 'id',
+                    title: 'Item',
+                    align: 'center'
+
+                },  {
+                    field: 'description',
+                    title: 'Description',
+                    align: "center"
+
+                },{
+                    field: 'timeadded',
+                    title: 'Time Added',
+                    width: "25%",
+                    align: 'center'
+
+                },{
+                    checkbox: true
+
+                }],
+                data: [{
+                    id: "Add a new item!",
+                    description: "Add a description as well",
+                    timeadded: parsedDate
+                }]
+            });
+
+        </script>
+
+        <!-- Jquery stuff for handling user input data-->
+        <script>
+            $(function() {
+                // add data to table
+
+                $('#savedata').on('click', function () {
+                    var currentDate = new Date();
+                    var datePortion = currentDate.toDateString().split(" ")
+                    var timePortion = currentDate.toTimeString().split(" ")[0]
+                    var parsedDate = timePortion + ", " + datePortion[0] + ", " + datePortion[1] + " " +  datePortion[2]
+                    console.log(parsedDate)
+                    $('#table').bootstrapTable('append', [{
+                        id: document.getElementById('element-item-text').value,
+                        timeadded: parsedDate,
+                        description: document.getElementById('element-item-description').value
+                    }]);
+
+                    $('#element-item-text').val($('element-item-text').attr('placeholder'));
+                    $('#element-item-description').val($('element-item-description').attr('placeholder'));
+
+
+                });
+                //delete all of the selected items
+                $('#delete_row').on('click', function () {
+                    var selects = $('#table').bootstrapTable('getSelections');
+                    items = $.map(selects, function (row) {
+                        return row.id;
+                    });
+                    $('#table').bootstrapTable('remove', {
+                        field: 'id',
+                        values: items
+                    });
+
+                });
+
+
+
+
+            });
+
+        </script>
+        <br>
+        <br>
+        <!-- Populate table with data from database -->
+        <script>
+        var grocerydata = {{ groceries|safe }};
+        console.log(grocerydata);
+        for (i=0; i < grocerydata.length; i++) {
+          var item = grocerydata[i]['item']
+          var time = grocerydata[i]['timeadded']
+          var description = grocerydata[i]['description']
+          $('#table').bootstrapTable('append', [{
+                        id: item,
+                        timeadded: time,
+                        description: description
+                    }]);
+        }
+
+
+
+
+        </script>
+        <div class=container> 
+          <p>Click <a href="/logout">here</a> to logout.</p>
+          {% for grocitem in groceries %}
+            <strong>Title:</strong> {{ grocitem['item'] }} 
+            <br>
+            <strong>Post</strong> {{ grocitem['description'] }} {{grocitem['timeadded']}}
+            <br>
+            <br>
+          {% endfor %}
+        </div>
+
+
+
+        <br>
+
+
+
+
+
+        <!-- Javascript Stuff-->
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/{{JQUERY_VERSION}}/jquery.min.js"></script>-->
+        <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>-->
+         <!-- <script src="js/plugins.js"></script>
+        // <script src="js/main.js"></script> -->
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='https://www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X','auto');ga('send','pageview');
+        </script>
+    </body>
+
 
 {% endblock %}

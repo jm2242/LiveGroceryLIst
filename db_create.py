@@ -2,7 +2,7 @@ from app import db
 from models import BlogPost
 
 # delete database contents
-BlogPost.query.delete()
+# BlogPost.query.delete()
 
 #create the database and the db tables
 #initializes based on schema defined in models.py

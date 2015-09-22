@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 # config
 app.secret_key = 'my precious'
-app.databse = 'sample.db'
+app.databse = 'sampasdvasdvdsle.db'
 
 # login required decorator
 def login_required(f):
@@ -24,20 +24,24 @@ def login_required(f):
 @app.route('/')
 @login_required
 def home():
-	g.db = connect_db()
-	cur = g.db.execute('select * from posts')
-	#print(cur)
-	#print(cur.fetchall())
-	
-	# posts =[]
-	# for row in cur.fetchall():
-	# 	post_dict ={}
-	# 	post_dict["title"] = row[0]
-	# 	post_dict["description"] = row[1]
-	# 	posts.append(post_dict)
-	# 	print posts
-	posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
-	g.db.close()
+	posts = []
+	try:
+		g.db = connect_db()
+		cur = g.db.execute('select * from posts')
+		#print(cur)
+		#print(cur.fetchall())
+		
+		# posts =[]
+		# for row in cur.fetchall():
+		# 	post_dict ={}
+		# 	post_dict["title"] = row[0]
+		# 	post_dict["description"] = row[1]
+		# 	posts.append(post_dict)
+		# 	print posts
+		posts = [dict(title=row[0], description=row[1]) for row in cur.fetchall()]
+		g.db.close()
+	except sqlite3.OperationalError:
+		flash("You have no database")
 	return render_template('index.html', posts=posts)  # render a template
     # return "Hello, World!"  # return a string
 

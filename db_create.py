@@ -2,7 +2,7 @@ from app import db
 from models import GroceryItem
 
 # delete database contents
-# GroceryItem.query.delete()
+GroceryItem.query.delete()
 
 #create the database and the db tables
 #initializes based on schema defined in models.py

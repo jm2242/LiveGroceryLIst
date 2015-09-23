@@ -7,40 +7,8 @@
         <![endif]-->
 
         <header>
-            <!-- How to do a navbar-->
-            <div class="navbar navbar-default navbar-fixed-top navbar-inverse id=navbar">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse"
-                                data-target="#example">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a href="" class="navbar-brand">LiveGroceryList</a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="example">
-                        <ul class="nav navbar-nav">
-                           <!--  <li><a href="">Link 1</a></li>
-                            <li><a href="">Link 2</a></li>
-                            <li><a href="">Link 3</a></li> -->
-                        </ul>
 
-                        <a href="" class="btn btn-primary navbar-btn navbar-right">Home</a>
-
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="jumbotron text-center">
-                <div class="container">
-                    <h1> Live Grocery List</h1>
-                    <p> Synchronize your grocery list between your entire family!</p>
-                </div>
-
-            </div>
+            
         </header>
 
 
@@ -146,7 +114,7 @@
                     id: "Add a new item!",
                     description: "Add a description as well!",
                     timeadded: parsedDate
-                    
+
                 }]
             });
 
@@ -235,14 +203,7 @@
 
         </script>
         <div class=container> 
-          <p>Click <a href="/logout">here</a> to logout.</p>
-          {% for grocitem in groceries %}
-            <strong>Title:</strong> {{ grocitem['item'] }} 
-            <br>
-            <strong>Post</strong> {{ grocitem['description'] }} {{grocitem['timeadded']}}
-            <br>
-            <br>
-          {% endfor %}
+          
         </div>
 
 

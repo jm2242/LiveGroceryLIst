@@ -1,6 +1,6 @@
 from app import db
 
-class BlogPost(db.Model):
+class GroceryItem(db.Model):
 
 	__tablename__ = "groceries"
 

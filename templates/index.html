@@ -67,6 +67,10 @@
                         >Add Row</button><a id='delete_row' class="pull-right btn btn-primary">Delete Selected Rows</a>
                 </div>
             </div>
+            <br>
+            <div class='row'> 
+              <button type="button" id="database-send" class="btn btn-warning btn-lg btn-block">Save Data to Database </button>
+            </div>  
         </div>
         <!--Define the modal window that pops up when adding a row -->
         <div class="modal fade" id="modal-1">
@@ -106,6 +110,11 @@
         <br>
         <!-- Set up the table-->
         <script>
+            //temporarily store added and deleted items, only updated database when user wants to
+            var addedItems = []
+            var deletedItems = []
+
+            //date stuff
             var currentDate = new Date();
             var datePortion = currentDate.toDateString().split(" ")
             var timePortion = currentDate.toTimeString().split(" ")[0]
@@ -152,13 +161,18 @@
                     var datePortion = currentDate.toDateString().split(" ")
                     var timePortion = currentDate.toTimeString().split(" ")[0]
                     var parsedDate = timePortion + ", " + datePortion[0] + ", " + datePortion[1] + " " +  datePortion[2]
-                    console.log(parsedDate)
+                    var item = document.getElementById('element-item-text').value
+                    var descript = document.getElementById('element-item-description').value
+                    //console.log(parsedDate)
                     $('#table').bootstrapTable('append', [{
-                        id: document.getElementById('element-item-text').value,
+                        id: item,
                         timeadded: parsedDate,
-                        description: document.getElementById('element-item-description').value
+                        description: descript
                     }]);
-
+                    //Store added item in global array
+                    addedItems.push([item,descript,parsedDate]);
+                    console.log(addedItems);
+                    // Refresh form fill
                     $('#element-item-text').val($('element-item-text').attr('placeholder'));
                     $('#element-item-description').val($('element-item-description').attr('placeholder'));
 
@@ -167,6 +181,11 @@
                 //delete all of the selected items
                 $('#delete_row').on('click', function () {
                     var selects = $('#table').bootstrapTable('getSelections');
+                    console.log(selects)
+                    for (i=0; i < selects.length; i++) {
+                      deletedItems.push(selects[i])
+                    }
+                    console.log(deletedItems)
                     items = $.map(selects, function (row) {
                         return row.id;
                     });
@@ -176,9 +195,19 @@
                     });
 
                 });
-
-
-
+            });
+            // Move data from client to backend
+            $(function() {
+              $('#database-send').on('click', function () {
+                $.getJSON($SCRIPT_ROOT + '/save', {
+                  added: JSON.stringify(addedItems),
+                  deleted: JSON.stringify(deletedItems)
+                }, function(data){
+                  console.log(data.result);
+                  addedItems = []
+                  deletedItems = []
+                });
+              });
 
             });
 
@@ -218,7 +247,6 @@
 
 
         <br>
-
 
 
 

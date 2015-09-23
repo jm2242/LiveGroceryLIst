@@ -2,6 +2,7 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash, g, jsonify
 from functools import wraps
 from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy.orm.exc import NoResultFound 
 #import sqlite3
 
 
@@ -67,11 +68,15 @@ def save():
 				grocery_item = item['id'].encode("utf-8")
 				timeadded = item['timeadded'].encode("utf-8")
 				description = item['description'].encode("utf-8")
-				item_to_be_deleted_as_grocery_object = db.session.query(GroceryItem).\
-				filter(GroceryItem.title == grocery_item, GroceryItem.description == description, GroceryItem.time == timeadded).one()
-				#print item_to_be_deleted_as_grocery_object
-				db.session.delete(item_to_be_deleted_as_grocery_object)
-				db.session.commit()
+				try:
+					item_to_be_deleted_as_grocery_object = db.session.query(GroceryItem).\
+					filter(GroceryItem.title == grocery_item, GroceryItem.description == description, GroceryItem.time == timeadded).one()
+					#print item_to_be_deleted_as_grocery_object
+					db.session.delete(item_to_be_deleted_as_grocery_object)
+					db.session.commit()
+				except NoResultFound:
+					print("Oops, that row is not in the database")
+
 			else:
 				print("the item to be deleted was only added on client side, never commited to database")
 	return jsonify(result="flask received the array of data")

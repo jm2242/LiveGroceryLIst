@@ -61,7 +61,7 @@ def save():
         for item in savedItems:
             # if the item is in the deleted list also, no need to add
             if item not in deletedItems:
-                db.session.add(GroceryItem(item[0], item[1], item[2]))
+                db.session.add(GroceryItem(item[0], item[1], item[2], item[3]))
                 db.session.commit()
             else:
                 print("the item is also queued to be deleted, so don't add it")
@@ -113,7 +113,7 @@ def login():
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out.')
-    return redirect(url_for('welcome'))
+    return redirect(url_for('login'))
 
 
 # don't need this because we are using sqlalchemy:

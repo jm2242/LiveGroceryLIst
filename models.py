@@ -12,10 +12,11 @@ class GroceryItem(db.Model):
     time = db.Column(db.String,nullable=False)
     author_id = db.Column(db.Integer, ForeignKey('users.id'))
 
-    def __init__(self, title, description, time):
+    def __init__(self, title, description, time, author_id):
         self.title = title
         self.description = description
         self.time = time
+        self.author_id = author_id
 
     def __repr__(self):
         return "{}-{}-{}".format(self.title, self.description, self.time)

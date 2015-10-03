@@ -65,6 +65,7 @@
 
       <div class="jumbotron text-center">
                   <div class="container">
+                      <br>
                       <h1> Live Grocery List</h1>
                       <p> Synchronize your grocery list between your entire family!</p>
                   </div>
@@ -72,7 +73,7 @@
       </div>
     </header>
 
-    <div class="container">
+    <div class="container text-center">
 
       <!-- child template -->
       {% block content %}{% endblock %}
@@ -83,9 +84,16 @@
       {% endif %}
 
       <!-- messages -->
-      {% for message in get_flashed_messages() %}
-        {{ message }}
-      {% endfor %}
+
+        <div class="container">
+            <div class="row">
+                {% for message in get_flashed_messages() %}
+                <h2>{{ message }} </h2>
+                {% endfor %}
+            </div>
+
+        </div>
+
     </div>
 
   </body>

@@ -32,7 +32,7 @@
                     <!-- Add buttons to delete and add rows-->
                     <br>
                     <button type="button" id="add_row" class="btn btn-primary pull-left" data-toggle="modal" data-target="#modal-1"
-                        >Add Row</button><a id='delete_row' class="pull-right btn btn-primary">Delete Selected Rows</a>
+                        >Add Items</button><a id='delete_row' class="pull-right btn btn-primary">Delete Selected Items</a>
                 </div>
             </div>
             <br>
@@ -49,20 +49,20 @@
                         <h3 class="modal-title text-center">Add an item!</h3>
                     </div>
                     <div class="modal-body">
-                        <div class="container">
-                            <form action="" class="form-inline">
-                                <div class="form-group has-feedback">
-                                    <label for="element-item-text" class="sr-only">This is the text of the label</label>
-                                    <input type="text" id="element-item-text" class="form-control" placeholder="Item name">
-                                    <!--<span class="glyphicon glyphicon-ok form-control-feedback"></span>-->
-                                </div>
-                                <div class="form-group">
-                                    <label for="element-item-description" class="sr-only">This is the text of the label</label>
-                                    <input type="text" id="element-item-description" class="form-control" placeholder="Item description">
-                                </div>
+                            <div class="row">
+                                <form action="" class="form-inline">
+                                    <div class="form-group has-feedback">
+                                        <label for="element-item-text" class="sr-only">This is the text of the label</label>
+                                        <input type="text" id="element-item-text" class="form-control" placeholder="Item name">
+                                        <!--<span class="glyphicon glyphicon-ok form-control-feedback"></span>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="element-item-description" class="sr-only">This is the text of the label</label>
+                                        <input type="text" id="element-item-description" class="form-control" placeholder="Item description">
+                                    </div>
+                                </form>
+                            </div>
 
-                            </form>
-                        </div>
                     </div>
                     <div class="modal-footer">
                         <p class="pull-left">Click close or anywhere outside the modal window to dismiss </p>
@@ -109,7 +109,7 @@
                 },{
                     field: 'timeadded',
                     title: 'Time Added',
-                    width: "25%",
+                    width: "20%",
                     align: 'center'
 
                 },{
@@ -139,15 +139,16 @@
                     var parsedDate = timePortion + ", " + datePortion[0] + ", " + datePortion[1] + " " +  datePortion[2]
                     var item = document.getElementById('element-item-text').value
                     var descript = document.getElementById('element-item-description').value
+                    var user = 1
                     //console.log(parsedDate)
                     $('#table').bootstrapTable('append', [{
                         id: item,
                         timeadded: parsedDate,
                         description: descript,
-                        author: "placeholder"
+                        author: user
                     }]);
                     //Store added item in global array
-                    addedItems.push([item,descript,parsedDate,"placeholder"]);
+                    addedItems.push([item,descript,parsedDate,user]);
                     console.log(addedItems);
                     // Refresh form fill
                     $('#element-item-text').val($('element-item-text').attr('placeholder'));

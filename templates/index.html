@@ -100,6 +100,12 @@
                     title: 'Description',
                     align: "center"
 
+                },
+                    {
+                    field: 'author',
+                    title: 'Added By',
+                    align: "center"
+
                 },{
                     field: 'timeadded',
                     title: 'Time Added',
@@ -113,7 +119,8 @@
                 data: [{
                     id: "Add a new item!",
                     description: "Add a description as well!",
-                    timeadded: parsedDate
+                    timeadded: parsedDate,
+                    author: "placeholder"
 
                 }]
             });
@@ -136,10 +143,11 @@
                     $('#table').bootstrapTable('append', [{
                         id: item,
                         timeadded: parsedDate,
-                        description: descript
+                        description: descript,
+                        author: "placeholder"
                     }]);
                     //Store added item in global array
-                    addedItems.push([item,descript,parsedDate]);
+                    addedItems.push([item,descript,parsedDate,"placeholder"]);
                     console.log(addedItems);
                     // Refresh form fill
                     $('#element-item-text').val($('element-item-text').attr('placeholder'));
@@ -188,13 +196,16 @@
         var grocerydata = {{ groceries|safe }};
         console.log(grocerydata);
         for (i=0; i < grocerydata.length; i++) {
-          var item = grocerydata[i]['item']
-          var time = grocerydata[i]['timeadded']
-          var description = grocerydata[i]['description']
+            var item = grocerydata[i]['item']
+            var time = grocerydata[i]['timeadded']
+            var description = grocerydata[i]['description']
+            var author = grocerydata[i]['author']
           $('#table').bootstrapTable('append', [{
                         id: item,
                         timeadded: time,
-                        description: description
+                        description: description,
+                        author: author
+
                     }]);
         }
 

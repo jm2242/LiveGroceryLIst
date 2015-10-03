@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../ComputerScience/BookSolutions/.idea/BookSolutions.iml" filepath="$PROJECT_DIR$/../ComputerScience/BookSolutions/.idea/BookSolutions.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ComputerScience/codingProblems/.idea/codingProblems.iml" filepath="$PROJECT_DIR$/../ComputerScience/codingProblems/.idea/codingProblems.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/flask-intro.iml" filepath="$PROJECT_DIR$/.idea/flask-intro.iml" />
     </modules>
   </component>

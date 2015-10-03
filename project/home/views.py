@@ -1,25 +1,18 @@
 # import the Flask class from the flask module
-from flask import Flask, render_template, redirect, url_for, request, session, flash, g, jsonify
+from project import app, db
+from project.models import GroceryItem
+from flask import render_template, redirect, url_for, request, session, flash, g, jsonify, Blueprint
 from functools import wraps
-from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.exc import NoResultFound
-# import sqlite3
-
-
-# create the application object
-app = Flask(__name__)
-
-# config
-import os
 import json
 
-app.config.from_object(os.environ['APP_SETTINGS'])
-# print os.environ['APP_SETTINGS']
 
-# create the sqlalchemy object
-db = SQLAlchemy(app)
-from models import *
 
+# config #
+home_blueprint = Blueprint('home', __name__,template_folder='templates')
+
+
+# helper functions ###
 
 # login required decorator
 def login_required(f):
@@ -29,13 +22,14 @@ def login_required(f):
             return f(*args, **kwargs)
         else:
             #flash('You need to login first.')
-            return redirect(url_for('login'))
+            return redirect(url_for('users.login'))
 
     return wrap
 
+#### routes ######
 
 # use decorators to link the function to a url
-@app.route('/')
+@home_blueprint.route('/')
 @login_required
 def home():
     groceries = db.session.query(GroceryItem).all()
@@ -49,7 +43,7 @@ def home():
 
 
 # save user added data, eventually also add data that user deleted here
-@app.route('/save')
+@home_blueprint.route('/save')
 def save():
     # get the list of new items
     savedItems = json.loads(request.args.get('added'))
@@ -89,36 +83,10 @@ def save():
     return jsonify(result="flask received the array of data")
 
 
-@app.route('/welcome')
+@home_blueprint.route('/welcome')
 def welcome():
-    return render_template('welcome.html')  # render a template
+    return render_template('home.welcome.html')  # render a template
 
 
-# route for handling the login page logic
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid Credentials. Please try again.'
-        else:
-            session['logged_in'] = True
-            flash('You were logged in.')
-            return redirect(url_for('home'))
-    return render_template('login.html', error=error)
 
 
-@app.route('/logout')
-@login_required
-def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out.')
-    return redirect(url_for('login'))
-
-
-# don't need this because we are using sqlalchemy:
-# def connect_db():
-# 	return sqlite3.connect(app.databse)
-# start the server with the 'run()' method
-if __name__ == '__main__':
-    app.run(debug=True)

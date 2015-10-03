@@ -1,5 +1,5 @@
-from app import db
-from models import GroceryItem
+from project import db
+from project.models import GroceryItem
 
 # delete database contents
 GroceryItem.query.delete()

@@ -15,6 +15,7 @@ Login with the following credentials:
 * [Twitter Bootstrap] - responsive UI boilerplate for modern web apps
 * [HTML5/Javascript/jQuery] - basic markup
 * [bootstrap-table] Extended bootstrap table with checkbox, sort, and other added features
+* [Postgresql] Open source relational database
 
 ## Version
 0.1
@@ -32,6 +33,7 @@ Email me at jmares93@gmail.com
    [Flask]: <http://flask.pocoo.org/docs/0.10/>
    [Heroku]: <https://www.heroku.com/>
    [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
+   [Postgresql]: <http://www.postgresql.org/>
    [livegrocerylist.tk]: <http://livegrocerylist.tk>
   
 

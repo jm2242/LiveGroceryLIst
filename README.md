@@ -9,6 +9,7 @@ Login with the following credentials:
 * username: "admin"
 * password: "admin"
 
+Items stored in the database will be retrieved upon login. All items added to table and saved to database will be available for retrieval by other users logging in as "admin."
 ## Tech
 * [Heroku] - platform as a service application hosting
 * [Flask] - micro webdevelopment framework for Python
@@ -22,6 +23,7 @@ Login with the following credentials:
 
 ## Todos
 * Fully implement user authentication 
+* Allow users to create families and store grocery lists by family
 * Allow users to share grocery list as a link
 ## Suggestions?
 Email me at jmares93@gmail.com

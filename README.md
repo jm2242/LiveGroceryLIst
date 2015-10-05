@@ -25,6 +25,7 @@ Items stored in the database will be retrieved upon login. All items added to ta
 * Fully implement user authentication 
 * Allow users to create families and store grocery lists by family
 * Allow users to share grocery list as a link
+* Improve UI
 ## Suggestions?
 Email me at jmares93@gmail.com
 
